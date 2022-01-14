@@ -7,7 +7,7 @@ Plugin Name: Voucher Tec - Minha Conta
 Plugin URI: https://github.com/TravelTec/vouchertec-account
 GitHub Plugin URI: https://github.com/TravelTec/vouchertec-account 
 Description: Voucher Tec - Minha Conta permite ao cliente da Travel Tec controlar e gerenciar seus pedidos, formas de pagamento e assinaturas no site.
-Version: 1.0.0
+Version: 1.0.2
 Author: Travel Tec
 Author URI: https://traveltec.com.br
 License: GPLv2
@@ -38,7 +38,7 @@ function account_update_checker_setting() {
  * @see https://developer.wordpress.org/reference/functions/add_rewrite_endpoint/
  */
 function my_custom_endpoints() {
-	add_rewrite_endpoint( 'subscriptions', EP_ROOT | EP_PAGES );
+	add_rewrite_endpoint( '2via-boleto', EP_ROOT | EP_PAGES );
 }
 
 add_action( 'init', 'my_custom_endpoints' );
@@ -50,9 +50,18 @@ add_action( 'init', 'my_custom_endpoints' );
  * @return array
  */
 function my_custom_query_vars( $vars ) {
-	$vars[] = 'subscriptions';
+	$vars[] = '2via-boleto';
 
 	return $vars;
 }
 
 add_filter( 'query_vars', 'my_custom_query_vars', 0 );
+
+/**
+ * Endpoint HTML content.
+ */
+function my_custom_endpoint_content() {
+	echo '<p>2ª via boleto Iugu</p>';
+}
+
+add_action( 'woocommerce_account_2via-boleto_endpoint', 'my_custom_endpoint_content' );
